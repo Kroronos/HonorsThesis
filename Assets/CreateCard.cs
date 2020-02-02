@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CreateCard : MonoBehaviour
 {
     public Card card;
 
-    public Text nameText;
-    public Text descriptionText;
-    public Text costText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI costText;
     public Image artImage;
 
 
@@ -17,6 +18,7 @@ public class CreateCard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         nameText.text = card.cardName;
         descriptionText.text = card.description;
         costText.text = card.cost.ToString();

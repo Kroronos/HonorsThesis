@@ -41,7 +41,7 @@ public class Deck : MonoBehaviour
             for (int i = 0; i < drawSize; ++i) {
                 Card accessed = cards[i];
                 cards.RemoveAt(i);
-                Destroy(transform.GetChild(transform.GetChildCount() - 1));
+                Destroy(transform.GetChild(transform.childCount - 1));
                 //@TODO add card to hand
             }
         }

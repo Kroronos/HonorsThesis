@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b45a47846ce6b34b812e8b570c4631e, type: 3}
+  m_Name: TheSapper
+  m_EditorClassIdentifier: 
+  startingCards:
+  - {fileID: 11400000, guid: 40e3a91061e0ab449a83335a977a22b0, type: 2}
+  - {fileID: 11400000, guid: 6807643b4f7128043b77eab0812f478c, type: 2}
+  - {fileID: 11400000, guid: 26c38fb50eaa340489f871ffa187b253, type: 2}
+  - {fileID: 11400000, guid: e643dabcb05fca9499376ff8e50332b2, type: 2}

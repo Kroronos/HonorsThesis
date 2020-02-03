@@ -15,7 +15,7 @@ public class Hand : MonoBehaviour
 
         Vector3 pos = transform.position;
        
-        Transform c = Instantiate(cardTemplate.transform, pos, cardTemplate.transform.rotation);
+        Transform c = Instantiate(cardTemplate.transform);
         c.SetParent(transform, true);
 
     }

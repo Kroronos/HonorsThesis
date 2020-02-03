@@ -29,4 +29,6 @@ public class CreateCard : MonoBehaviour
 
         artImage.sprite = card.art;
     }
+
+
 }

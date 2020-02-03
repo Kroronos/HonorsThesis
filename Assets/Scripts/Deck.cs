@@ -7,43 +7,56 @@ public class Deck : MonoBehaviour
 
     public PlayerClass playerClass;
     private List<Card> cards = new List<Card>();
-    public Transform discardPile;
+
     public Transform cardBack;
-    public Transform hand;
 
     // Start is called before the first frame update
     void Awake()
     {
         foreach(Card card in playerClass.startingCards) {
             cards.Add(card);
+        }
+
+        foreach (Card card in cards) {
             Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
             c.SetParent(transform, true);
-
         }
     }
 
-    void Shuffle() {
+    public void Shuffle() {
 
     }
 
-    void DrawHand(int drawSize = 5) {
+    public List<Card> Draw(int drawSize = 5) {
+
+        List<Card> drawnCards = new List<Card>();
 
         if (drawSize == 0)
-            return;
+            return null;
 
 
         if(cards.Count < drawSize) {
-            DrawHand(cards.Count);
+            drawnCards = Draw(cards.Count);
             Shuffle();
-            DrawHand(drawSize - cards.Count);
+            drawnCards.AddRange(Draw(drawSize - cards.Count));
+
+            return drawnCards;
         }
         else {
-            for (int i = 0; i < drawSize; ++i) {
+
+            int oldChildCount = transform.childCount;
+
+            for (int i = drawSize-1; i >= 0; --i) {
                 Card accessed = cards[i];
                 cards.RemoveAt(i);
-                Destroy(transform.GetChild(transform.childCount - 1));
-                //@TODO add card to hand
+
+                Destroy(transform.GetChild(oldChildCount - i - 1).gameObject);
+                
+                drawnCards.Add(accessed);
             }
+            
+            return drawnCards;
+
         }
 
 

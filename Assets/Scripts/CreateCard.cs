@@ -18,12 +18,15 @@ public class CreateCard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Init(card);
+        
+    }
 
+    public void Init(Card c) {
         nameText.text = card.cardName;
         descriptionText.text = card.description;
         costText.text = card.cost.ToString();
 
         artImage.sprite = card.art;
-        
     }
 }

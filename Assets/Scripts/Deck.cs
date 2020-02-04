@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck : CardBackContainer
 {
 
     public PlayerClass playerClass;
-    private List<Card> cards = new List<Card>();
-
-    public Transform cardBack;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,20 +33,6 @@ public class Deck : MonoBehaviour
             //swap
             cards[randIndex] = cards[i];
             cards[i] = sel;
-        }
-    }
-
-    public void AddCard(Card card) {
-        cards.Add(card);
-        Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
-        c.SetParent(transform, true);
-    }
-
-    public void AddCard(List<Card> cards) {
-        foreach (Card card in cards) {
-            this.cards.Add(card);
-            Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
-            c.SetParent(transform, true);
         }
     }
 

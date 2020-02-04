@@ -6,7 +6,7 @@ public class Hand : MonoBehaviour
 {
     public List<Card> cards = new List<Card>();
 
-    public CreateCard cardTemplate;
+    public CardTemplate cardTemplate;
 
     public void AddCard(Card card) {
         cards.Add(card);

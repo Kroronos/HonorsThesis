@@ -11,7 +11,7 @@ public class CardController : MonoBehaviour
     public DiscardPile discard;
 
     private int baseResources = 3;
-    public int resources = 3;
+    public static int resources;
 
     private CardTemplate selectedCard;
 
@@ -22,6 +22,8 @@ public class CardController : MonoBehaviour
         else {
             Debug.LogError("More than one card controller in application.");
         }
+
+        resources = baseResources;
     }
 
     void Start() {

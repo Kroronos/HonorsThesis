@@ -10,6 +10,7 @@ public class CardController : MonoBehaviour
     public Hand hand;
     public DiscardPile discard;
 
+    private int baseResources = 3;
     public int resources = 3;
 
     private CardTemplate selectedCard;
@@ -63,8 +64,9 @@ public class CardController : MonoBehaviour
 
     public void UseCard() {
         if (selectedCard) {
-            discard.addCard(selectedCard.card);
+            discard.AddCard(selectedCard.card);
             selectedCard.releaseIndicator();
+            hand.RemoveCard(selectedCard.card);
             Destroy(selectedCard.gameObject);
             selectedCard = null;
         }
@@ -73,6 +75,15 @@ public class CardController : MonoBehaviour
 
     public List<Card> RetrieveDiscard() {
         return discard.Empty();
+    }
+
+    public void EndTurn() {
+        resources = baseResources;
+
+        discard.AddCard(hand.Empty());
+
+        foreach (Card card in deck.Draw(4))
+            hand.AddCard(card);
     }
     
 

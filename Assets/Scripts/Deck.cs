@@ -58,13 +58,17 @@ public class Deck : MonoBehaviour
         List<Card> drawnCards = new List<Card>();
 
         if (drawSize == 0)
-            return null;
+            return new List<Card>();
 
 
         if(cards.Count < drawSize) {
+            int cardCount = cards.Count;
             drawnCards = Draw(cards.Count);
+
             Shuffle();
-            drawnCards.AddRange(Draw(drawSize - cards.Count));
+
+            int drawAmount = (drawSize - cardCount < cards.Count) ? drawSize - cardCount : cards.Count;
+            drawnCards.AddRange(Draw(drawAmount));
 
             return drawnCards;
         }

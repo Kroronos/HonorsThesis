@@ -17,4 +17,4 @@ MonoBehaviour:
     in a 120 degree cone.
   art: {fileID: 21300000, guid: c20acfe7fce85f84ca5c39449b80d5d4, type: 3}
   cost: 2
-  turret: {fileID: 0}
+  turret: {fileID: 6223487092857538886, guid: 2f50caa12468276408d0732fb7d69556, type: 3}

@@ -33,14 +33,14 @@ public class CardTemplate : MonoBehaviour, IPointerClickHandler {
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
             Debug.Log("Selected card" + card.cardName);
 
-            CardManager.singleton.SetSelected(card);
+            CardController.cardController.SetSelected(card);
 
         }
 
         if (pointerEventData.button == PointerEventData.InputButton.Right) {
             Debug.Log("Deselected" + card.cardName);
 
-            CardManager.singleton.SetSelected(null);
+            CardController.cardController.SetSelected(null);
         }
         
     }

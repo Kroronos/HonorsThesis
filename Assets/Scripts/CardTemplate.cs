@@ -14,6 +14,7 @@ public class CardTemplate : MonoBehaviour, IPointerClickHandler {
     public Image artImage;
 
     private Transform SelectionIndicatorInstance;
+    public bool inHand;
 
 
     // Start is called before the first frame update
@@ -41,13 +42,13 @@ public class CardTemplate : MonoBehaviour, IPointerClickHandler {
     }
     
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if (pointerEventData.button == PointerEventData.InputButton.Left) {
+        if (pointerEventData.button == PointerEventData.InputButton.Left && inHand) {
             Debug.Log("Selected card" + card.cardName);
 
             CardController.cardController.SetSelected(this);
         }
 
-        if (pointerEventData.button == PointerEventData.InputButton.Right) {
+        if (pointerEventData.button == PointerEventData.InputButton.Right && inHand) {
             Debug.Log("Deselected" + card.cardName);
 
             CardController.cardController.SetSelected(null);

@@ -10,6 +10,8 @@ public class CardController : MonoBehaviour
     public Hand hand;
     public DiscardPile discard;
 
+    public int resources = 3;
+
     private CardTemplate selectedCard;
 
     void Awake() {
@@ -50,6 +52,27 @@ public class CardController : MonoBehaviour
         }
 
         selectedCard = selection;
+    }
+
+    public bool CanAffordSelected() {
+        if(selectedCard && selectedCard.card.cost <= resources) {
+            return true;
+        }
+        return false;
+    }
+
+    public void UseCard() {
+        if (selectedCard) {
+            discard.addCard(selectedCard.card);
+            selectedCard.releaseIndicator();
+            Destroy(selectedCard.gameObject);
+            selectedCard = null;
+        }
+        
+    }
+
+    public List<Card> RetrieveDiscard() {
+        return discard.Empty();
     }
     
 

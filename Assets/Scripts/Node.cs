@@ -23,10 +23,12 @@ public class Node : MonoBehaviour
     }
 
     void OnMouseDown() {
-        if (CardController.cardController.GetSelectedCard() is TurretCard) {
+        if (CardController.cardController.GetSelectedCard() is TurretCard && CardController.cardController.CanAffordSelected()) {
             Turret buildTurret = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
             Transform turret = Instantiate(buildTurret.transform, transform.position, transform.rotation);
             turret.SetParent(transform, true);
+
+            CardController.cardController.UseCard();
         }
     }
 

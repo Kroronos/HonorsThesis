@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,16 +16,41 @@ public class Deck : MonoBehaviour
     {
         foreach(Card card in playerClass.startingCards) {
             cards.Add(card);
-        }
-
-        foreach (Card card in cards) {
             Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
             c.SetParent(transform, true);
         }
+
     }
 
     public void Shuffle() {
+        AddCard(CardController.cardController.RetrieveDiscard());
 
+        //Fisher-Yates Shuffle
+        System.Random random = new System.Random();
+
+        for(int i = 0; i < cards.Count-1; ++i) {
+            int randIndex = i + random.Next(cards.Count-i);
+
+            Card sel = cards[randIndex];
+            
+            //swap
+            cards[randIndex] = cards[i];
+            cards[i] = sel;
+        }
+    }
+
+    public void AddCard(Card card) {
+        cards.Add(card);
+        Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
+        c.SetParent(transform, true);
+    }
+
+    public void AddCard(List<Card> cards) {
+        foreach (Card card in cards) {
+            this.cards.Add(card);
+            Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
+            c.SetParent(transform, true);
+        }
     }
 
     public List<Card> Draw(int drawSize = 5) {

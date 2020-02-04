@@ -371,6 +371,7 @@ MonoBehaviour:
   descriptionText: {fileID: 2529202443836892230}
   costText: {fileID: 2529202443191637586}
   artImage: {fileID: 2529202443106380796}
+  inHand: 1
 --- !u!114 &2883881300356600367
 MonoBehaviour:
   m_ObjectHideFlags: 0

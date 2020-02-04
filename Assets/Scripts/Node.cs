@@ -17,14 +17,14 @@ public class Node : MonoBehaviour
     }
 
     void OnMouseEnter() {
-        if(CardController.cardController.GetSelected() is TurretCard) {
+        if(CardController.cardController.GetSelectedCard() is TurretCard) {
             rend.material.color = selectedColor;
         }
     }
 
     void OnMouseDown() {
-        if (CardController.cardController.GetSelected() is TurretCard) {
-            Turret buildTurret = ((TurretCard)CardController.cardController.GetSelected()).turret;
+        if (CardController.cardController.GetSelectedCard() is TurretCard) {
+            Turret buildTurret = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
             Transform turret = Instantiate(buildTurret.transform, transform.position, transform.rotation);
             turret.SetParent(transform, true);
         }

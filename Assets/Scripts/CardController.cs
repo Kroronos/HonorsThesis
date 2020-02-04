@@ -10,7 +10,7 @@ public class CardController : MonoBehaviour
     public Hand hand;
     public DiscardPile discard;
 
-    private Card selectedCard;
+    private CardTemplate selectedCard;
 
     void Awake() {
         if(cardController == null) {
@@ -28,11 +28,27 @@ public class CardController : MonoBehaviour
     
     }
 
-    public Card GetSelected() {
-        return selectedCard;
+    public Card GetSelectedCard() {
+        if(selectedCard)
+            return selectedCard.card;
+        return null;
     }
 
-    public void SetSelected(Card selection) {
+    public void SetSelected(CardTemplate selection) {
+        if(selection == null) {
+            if (selectedCard) {
+                selectedCard.releaseIndicator();
+
+            }
+        }
+        else if(selectedCard == null) {
+            selection.setIndicator();
+        }
+        else {
+            selectedCard.releaseIndicator();
+            selection.setIndicator();
+        }
+
         selectedCard = selection;
     }
     

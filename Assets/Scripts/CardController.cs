@@ -80,7 +80,10 @@ public class CardController : MonoBehaviour
     }
 
     public void EndTurn() {
+        
         resources = baseResources;
+
+        SetSelected(null);
 
         discard.AddCard(hand.Empty());
 

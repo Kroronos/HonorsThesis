@@ -44,7 +44,7 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Rotation"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""74d2d6fe-8927-4180-b60f-18d55acd96d8"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",

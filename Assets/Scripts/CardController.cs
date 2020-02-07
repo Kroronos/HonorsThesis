@@ -5,6 +5,10 @@ using UnityEngine;
 public class CardController : MonoBehaviour
 {
     public static CardController cardController;
+    public CardDisplay cardDisplay;
+
+    public Canvas cardDisplayCanvas;
+
 
     public Deck deck;
     public Hand hand;
@@ -24,6 +28,7 @@ public class CardController : MonoBehaviour
         }
 
         resources = baseResources;
+        cardDisplayCanvas.gameObject.SetActive(false);
     }
 
     void Start() {
@@ -32,6 +37,7 @@ public class CardController : MonoBehaviour
             hand.AddCard(card);
     
     }
+
 
     public Card GetSelectedCard() {
         if(selectedCard)

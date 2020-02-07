@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
+
     private Renderer rend;
 
     private Turret builtTurret;
@@ -23,6 +24,12 @@ public class Node : MonoBehaviour
         selectedColor = Color.magenta;
     }
 
+    void Update() {
+        if (displayTurret != null) {
+            displayTurret.Rotate(displayTurret.up, Input.GetAxis("Mouse X") * 100, Space.World);
+        }
+    }
+
     void OnMouseEnter() {
         if(CardController.cardController.GetSelectedCard() is TurretCard
             && CardController.cardController.CanAffordSelected()
@@ -31,6 +38,7 @@ public class Node : MonoBehaviour
 
             Turret disp = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
             displayTurret = Instantiate(disp.transform, transform.position, transform.rotation);
+            displayTurret.SetParent(transform, true);
         }
     }
 

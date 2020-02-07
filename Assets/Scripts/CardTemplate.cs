@@ -16,7 +16,6 @@ public class CardTemplate : MonoBehaviour, IPointerClickHandler {
     private Transform SelectionIndicatorInstance;
     public bool inHand;
 
-
     // Start is called before the first frame update
     void Start()
     {

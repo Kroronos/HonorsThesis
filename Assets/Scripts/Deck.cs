@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Deck : CardBackContainer
-{
+public class Deck : CardBackContainer, IPointerClickHandler {
 
     public PlayerClass playerClass;
 
@@ -71,7 +71,24 @@ public class Deck : CardBackContainer
             return drawnCards;
 
         }
-
-
     }
+
+    public void OnPointerClick(PointerEventData pointerEventData) {
+
+        Debug.Log("Showing deck card display");
+
+        CardController.cardController.cardDisplay.AddCard(cards);
+
+        CardController.cardController.cardDisplay.gameObject.SetActive(true);
+    }
+
+    public void SendDeckToCardDisplay() {
+
+        Debug.Log("Showing deck card display");
+        CardController.cardController.cardDisplay.AddCard(cards);
+
+        CardController.cardController.cardDisplayCanvas.gameObject.SetActive(true);
+    }
+
+
 }

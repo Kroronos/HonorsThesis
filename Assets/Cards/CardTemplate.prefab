@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 2529202442377563131}
   - component: {fileID: 2529202443147900456}
   - component: {fileID: 2529202443147900459}
-  - component: {fileID: 2883881300356600367}
+  - component: {fileID: -7678287703539432236}
   m_Layer: 5
   m_Name: CardTemplate
   m_TagString: Untagged
@@ -372,7 +372,7 @@ MonoBehaviour:
   costText: {fileID: 2529202443191637586}
   artImage: {fileID: 2529202443106380796}
   inHand: 1
---- !u!114 &2883881300356600367
+--- !u!114 &-7678287703539432236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -385,12 +385,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: 125
-  m_PreferredHeight: 200
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: 1
+  m_MinWidth: 120
+  m_MinHeight: 240
+  m_PreferredWidth: 120
+  m_PreferredHeight: 240
+  m_FlexibleWidth: 120
+  m_FlexibleHeight: 240
   m_LayoutPriority: 1
 --- !u!1 &2529202443191637588
 GameObject:

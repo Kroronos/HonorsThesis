@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BarbedWire
   m_EditorClassIdentifier: 
   cardName: Barbed Wire
-  description: Creates a permanent obstacle while slows enemies passing through it.
+  description: Creates a permanent obstacle which slows enemies passing through it.
   art: {fileID: 21300000, guid: 7869f0bec2bc50645a42d606643422e6, type: 3}
   cost: 0

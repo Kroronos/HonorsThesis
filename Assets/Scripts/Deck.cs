@@ -9,13 +9,13 @@ public class Deck : CardBackContainer, IPointerClickHandler {
     public PlayerClass playerClass;
 
     // Start is called before the first frame update
-    void Awake()
+    public void DeckStart()
     {
         foreach(Card card in playerClass.startingCards) {
-            cards.Add(card);
-            Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
-            c.SetParent(transform, true);
+            AddCard(card);
         }
+
+        Shuffle();
 
     }
 
@@ -57,16 +57,12 @@ public class Deck : CardBackContainer, IPointerClickHandler {
         }
         else {
 
-            int oldChildCount = transform.childCount;
-
-            for (int i = drawSize-1; i >= 0; --i) {
+            for (int i = drawSize - 1; i >= 0; --i) {
                 Card accessed = cards[i];
                 cards.RemoveAt(i);
-
-                Destroy(transform.GetChild(oldChildCount - i - 1).gameObject);
-                
                 drawnCards.Add(accessed);
             }
+            
             
             return drawnCards;
 
@@ -76,19 +72,10 @@ public class Deck : CardBackContainer, IPointerClickHandler {
     public void OnPointerClick(PointerEventData pointerEventData) {
 
         Debug.Log("Showing deck card display");
-
-        CardController.cardController.cardDisplay.AddCard(cards);
-
-        CardController.cardController.cardDisplay.gameObject.SetActive(true);
-    }
-
-    public void SendDeckToCardDisplay() {
-
-        Debug.Log("Showing deck card display");
-        CardController.cardController.cardDisplay.AddCard(cards);
-
         CardController.cardController.cardDisplayCanvas.gameObject.SetActive(true);
+        CardController.cardController.cardDisplay.Display(cards, "Deck");
     }
+
 
 
 }

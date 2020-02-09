@@ -7,11 +7,12 @@ public class DiscardPile : CardFrontContainer, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData pointerEventData) {
 
-        Debug.Log("Showing deck card display");
+        Debug.Log("Showing discard card display");
 
-        CardController.cardController.cardDisplay.AddCard(cards);
+        CardController.cardController.cardDisplayCanvas.gameObject.SetActive(true);
+        CardController.cardController.cardDisplay.Display(cards, "Discard Pile");
 
-        CardController.cardController.cardDisplay.gameObject.SetActive(true);
+
     }
 
 

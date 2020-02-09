@@ -33,6 +33,7 @@ public class CardTemplate : MonoBehaviour, IPointerClickHandler {
 
     
     public void setIndicator() {
+        Debug.Log("Setting indicator to select card " + card.cardName);
         SelectionIndicatorInstance = Instantiate(SelectionIndicator.transform, transform.position, SelectionIndicator.transform.rotation);
     }
 

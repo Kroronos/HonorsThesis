@@ -34,15 +34,25 @@ public class CardFrontContainer: CardContainer {
 
         cardTemplate.card = card;
         Transform c = Instantiate(cardTemplate.transform);
+
+        foreach (Transform child in transform) {
+            Destroy(child);
+        }
+
         c.SetParent(transform, true);
     }
 
     public override void AddCard(List<Card> cards) {
         foreach (Card card in cards) {
             this.cards.Add(card);
-            Transform c = Instantiate(cardTemplate.transform);
-            c.SetParent(transform, true);
         }
+
+        foreach (Transform child in transform) {
+            Destroy(child);
+        }
+
+        Transform c = Instantiate(cardTemplate.transform);
+        c.SetParent(transform, true);
     }
 }
 
@@ -53,14 +63,20 @@ public class CardBackContainer : CardContainer {
 
     public override void AddCard(Card card) {
         cards.Add(card);
-        Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
-        c.SetParent(transform, true);
+
+        if(transform.childCount <= 0) {
+            Transform c = Instantiate(cardBack, transform.position, transform.rotation);
+            c.SetParent(transform, true);
+        }
     }
 
     public override void AddCard(List<Card> cards) {
         foreach (Card card in cards) {
             this.cards.Add(card);
-            Transform c = Instantiate(cardBack, transform.position, cardBack.rotation);
+        }
+
+        if (transform.childCount <= 0) {
+            Transform c = Instantiate(cardBack, transform.position, transform.rotation);
             c.SetParent(transform, true);
         }
     }

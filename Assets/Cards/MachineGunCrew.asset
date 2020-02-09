@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MachineGunCrew
   m_EditorClassIdentifier: 
   cardName: Machine Gun Crew
-  description: laces a small machine gun crew in a building which can shoot at enemies
+  description: Places a small machine gun crew in a building which can shoot at enemies
     in a 120 degree cone.
   art: {fileID: 21300000, guid: c20acfe7fce85f84ca5c39449b80d5d4, type: 3}
   cost: 2

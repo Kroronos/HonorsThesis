@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CardController : MonoBehaviour
 {
@@ -14,8 +15,9 @@ public class CardController : MonoBehaviour
     public Hand hand;
     public DiscardPile discard;
 
-    private int baseResources = 3;
+    public int baseResources = 3;
     public static int resources;
+    public TextMeshProUGUI resourceText;
 
     private CardTemplate selectedCard;
 
@@ -28,10 +30,13 @@ public class CardController : MonoBehaviour
         }
 
         resources = baseResources;
+        resourceText.text = "Resources: " + resources;
         cardDisplayCanvas.gameObject.SetActive(false);
     }
 
     void Start() {
+
+        deck.DeckStart();
 
         foreach (Card card in deck.Draw(4))
             hand.AddCard(card);
@@ -46,32 +51,54 @@ public class CardController : MonoBehaviour
     }
 
     public void SetSelected(CardTemplate selection) {
+
         if(selection == null) {
             if (selectedCard) {
                 selectedCard.releaseIndicator();
 
             }
         }
-        else if(selectedCard == null) {
-            selection.setIndicator();
+        else if(CanAffordCard(selection.card)) {
+            
+            if (selectedCard == null) {
+                selection.setIndicator();
+            }
+            else {
+                selectedCard.releaseIndicator();
+                selection.setIndicator();
+            }
         }
         else {
-            selectedCard.releaseIndicator();
-            selection.setIndicator();
+            Debug.Log("Cannot afford selection"); //@TODO make ui popup
+            return;
         }
+
 
         selectedCard = selection;
     }
 
     public bool CanAffordSelected() {
-        if(selectedCard && selectedCard.card.cost <= resources) {
+        if(selectedCard && CanAffordCard(selectedCard.card)) {
             return true;
         }
         return false;
     }
 
+    private bool CanAffordCard(Card card) {
+        if (card.cost <= resources) {
+            return true;
+        }
+        else return false; 
+    }
+
+    public void UseResource(Card card) {
+        resources -= card.cost;
+        resourceText.text = "Resources: " + resources;
+    }
+
     public void UseCard() {
         if (selectedCard) {
+            UseResource(selectedCard.card);
             discard.AddCard(selectedCard.card);
             selectedCard.releaseIndicator();
             hand.RemoveCard(selectedCard.card);
@@ -82,7 +109,10 @@ public class CardController : MonoBehaviour
     }
 
     public List<Card> RetrieveDiscard() {
-        return discard.Empty();
+        if(discard != null)
+            return discard.Empty();
+
+        return new List<Card>();
     }
 
     public void EndTurn() {

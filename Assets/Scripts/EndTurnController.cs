@@ -8,6 +8,5 @@ public class EndTurnController : MonoBehaviour
         CardController.cardController.EndTurn();
 
         SpawnPointController.spawnPointController.NextWave();
-
     }
 }

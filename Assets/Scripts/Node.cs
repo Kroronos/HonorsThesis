@@ -25,20 +25,16 @@ public class Node : MonoBehaviour
     }
 
     void Update() {
-        if (displayTurret != null) {
-            displayTurret.Rotate(displayTurret.up, Input.GetAxis("Mouse X") * 100, Space.World);
-        }
+
     }
 
     void OnMouseEnter() {
-        if(CardController.cardController.GetSelectedCard() is TurretCard
-            && CardController.cardController.CanAffordSelected()
-            && builtTurret == null) {
+        if(!BuildingManager.buildingManager.InProgress() && builtTurret == null) {
             rend.material.color = selectedColor;
 
-            Turret disp = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
+            /*Turret disp = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
             displayTurret = Instantiate(disp.transform, transform.position, transform.rotation);
-            displayTurret.SetParent(transform, true);
+            displayTurret.SetParent(transform, true);*/
         }
     }
 
@@ -51,20 +47,23 @@ public class Node : MonoBehaviour
             if (displayTurret != null)
                 Destroy(displayTurret.gameObject);
 
-            builtTurret = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
+           /* builtTurret = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
             Transform turret = Instantiate(builtTurret.transform, transform.position, transform.rotation);
             turret.SetParent(transform, true);
 
-            CardController.cardController.UseCard();
 
-            rend.material.color = defaultColor;
+
+            CardController.cardController.UseCard();
+            rend.material.color = defaultColor;*/
         }
     }
+
 
     void OnMouseExit() {
         if (displayTurret != null)
             Destroy(displayTurret.gameObject);
 
-        rend.material.color = defaultColor;
+        if(!BuildingManager.buildingManager.InProgress())
+            rend.material.color = defaultColor;
     }
 }

@@ -6,13 +6,16 @@ public class Buildable : MonoBehaviour
 {
     public List<GameObject> buildableOn;
 
-    public bool IsBuildableOn(System.Type target) {
+    public bool IsBuildableOn(GameObject targ) {
 
         foreach(GameObject obj in buildableOn) {
-            if (obj.GetType() == target) return true;
+            if (targ.GetComponent<Placement>() != null &&
+                targ.GetComponent<Placement>().GetType() == obj.GetComponent<Placement>().GetType() &&
+                !obj.GetComponent<Placement>().BuiltOn()) {
+                return true;
+            }
         }
 
         return false;
     }
-
 }

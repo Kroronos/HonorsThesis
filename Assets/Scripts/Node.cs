@@ -2,68 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
-{
-
+public class Node : Placement {
     private Renderer rend;
 
     private Turret builtTurret;
-    private Transform displayTurret;
 
     private Color defaultColor;
-    private Color selectedColor;
+    private Color selectColor = Color.blue;
+    private Color inProgressColor = Color.magenta;
 
     void Start() { 
 
         builtTurret = null;
-        displayTurret = null;
 
         rend = GetComponent<Renderer>();
 
-        defaultColor = Color.white;
-        selectedColor = Color.magenta;
-    }
-
-    void Update() {
+        defaultColor = rend.material.GetColor("_Color");
 
     }
 
-    void OnMouseEnter() {
-        if(!BuildingManager.buildingManager.InProgress() && builtTurret == null) {
-            rend.material.color = selectedColor;
+    public override Transform PlaceBuildable(Buildable building) {
+        //probably want to do some redundant error checks here 
 
-            /*Turret disp = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
-            displayTurret = Instantiate(disp.transform, transform.position, transform.rotation);
-            displayTurret.SetParent(transform, true);*/
-        }
+        Transform c = Instantiate(building.transform, transform.position, transform.rotation);
+        c.SetParent(transform, true);
+
+        builtTurret = c.GetComponent<Turret>();
+
+        return c;
     }
 
-    void OnMouseDown() {
-
-        if (CardController.cardController.GetSelectedCard() is TurretCard
-            && CardController.cardController.CanAffordSelected()
-            && builtTurret == null) {
-
-            if (displayTurret != null)
-                Destroy(displayTurret.gameObject);
-
-           /* builtTurret = ((TurretCard)CardController.cardController.GetSelectedCard()).turret;
-            Transform turret = Instantiate(builtTurret.transform, transform.position, transform.rotation);
-            turret.SetParent(transform, true);
-
-
-
-            CardController.cardController.UseCard();
-            rend.material.color = defaultColor;*/
-        }
+    public override void RotateBuildable(float rotationSpeed) {
+        builtTurret.PlacementRotate(rotationSpeed);
     }
 
+    public override void RemoveBuildable() {
+        Destroy(builtTurret.gameObject);
 
-    void OnMouseExit() {
-        if (displayTurret != null)
-            Destroy(displayTurret.gameObject);
+        builtTurret = null;
+    }
+    public override void ResetColor() {
+        rend.material.color = defaultColor;
+    }
+    public override void SetColorToSelection() {
+        rend.material.color = selectColor;
+    }
+    public override void SetColorToInProgress() {
+        rend.material.color = inProgressColor;
+    }
 
-        if(!BuildingManager.buildingManager.InProgress())
-            rend.material.color = defaultColor;
+    public override bool BuiltOn() {
+        return (builtTurret != null);
     }
 }

@@ -8,7 +8,7 @@ public class BuildingManager : MonoBehaviour
     public static BuildingManager buildingManager;
     public Buildable building;
     public Transform display;
-    public Transform target;
+    public Placement target;
 
     public float rotationSpeed = 10f;
 
@@ -17,7 +17,6 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     private KeyCode rightRotationHotkey = KeyCode.E;
-
 
     private bool inProgress = false;
 
@@ -30,6 +29,7 @@ public class BuildingManager : MonoBehaviour
         else {
             Debug.LogError("More than one building manager in application.");
         }
+
 
     }
 
@@ -67,13 +67,26 @@ public class BuildingManager : MonoBehaviour
 
         if(Physics.Raycast(ray, out hitInfo)) { //are we over anything, @TODO accurate mostly except when over UI
 
-            if (building.IsBuildableOn(hitInfo.collider.gameObject.GetType())) { //is that thing a valid placement
+            if (building.IsBuildableOn(hitInfo.collider.gameObject)) { //is that thing a valid placement
+
+                if (target != null)
+                    target.ResetColor();
+
+                if (display != null)
+                    target.RemoveBuildable();
+
+                target = hitInfo.collider.gameObject.GetComponent<Placement>();
+
+                target.SetColorToSelection();
+
+                display = target.PlaceBuildable(building);
 
                 if (Input.GetMouseButtonDown(0)) { //left mouse click
                     Debug.Log("Beginning build progress...");
 
-                    display = Instantiate(building.transform, hitInfo.collider.transform.position, hitInfo.collider.transform.rotation);
-                    display.SetParent(hitInfo.collider.transform, true);
+                    //change color to indicate build
+                    target.SetColorToInProgress();
+
                     inProgress = true;
                 }
             }
@@ -82,18 +95,21 @@ public class BuildingManager : MonoBehaviour
 
     public void RotateCheck() {
         if(Input.GetKeyDown(leftRotationHotkey)) {
-            display.transform.Rotate(Vector3.up, rotationSpeed);
+            target.RotateBuildable(rotationSpeed);
         }
         else if(Input.GetKeyDown(rightRotationHotkey)) {
-            display.transform.Rotate(Vector3.up, -rotationSpeed);
-
+            target.RotateBuildable(-rotationSpeed);
         }
     }
 
     public void BuildCheck() {
         if (Input.GetMouseButtonDown(0)) { //finalize build
-            
-            //reset vars
+            Debug.Log("Building");
+
+            //color reset
+            target.ResetColor();
+
+           //reset vars
             inProgress = false;
             building = null;
             display = null;
@@ -108,11 +124,15 @@ public class BuildingManager : MonoBehaviour
         if(inProgress) { //check again to see if building has already been placed;
             if (Input.GetMouseButtonDown(1)) { //right mouse down
                 Debug.Log("Cancelling build");
+
+                //color reset
+                target.ResetColor();
+
                 building = null;
 
-                Destroy(display.gameObject);
-                display = null;
+                target.RemoveBuildable();
 
+                display = null;
                 inProgress = false;
             }
         }

@@ -90,6 +90,14 @@ public class Turret : Buildable
 
     }
 
+    public void PlacementRotate(float rotationSpeed) {
+        
+        transform.Rotate(Vector3.up, rotationSpeed);
+        defaultRotation = rotatingPart.rotation; //maybe this
+
+
+    }
+
     void Shoot() {
         fireCountdown -= Time.deltaTime;
 

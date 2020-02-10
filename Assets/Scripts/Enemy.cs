@@ -22,6 +22,10 @@ public class Enemy : MonoBehaviour
         speed = baseSpeed * percentSlow;
     }
 
+    public void ResetSpeed() {
+        speed = baseSpeed;
+    }
+
     void Die() {
         Destroy(gameObject);
     }

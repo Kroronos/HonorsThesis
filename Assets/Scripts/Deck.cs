@@ -53,6 +53,8 @@ public class Deck : CardBackContainer, IPointerClickHandler {
             int drawAmount = (drawSize - cardCount < cards.Count) ? drawSize - cardCount : cards.Count;
             drawnCards.AddRange(Draw(drawAmount));
 
+            EmptyCheck();
+
             return drawnCards;
         }
         else {
@@ -62,8 +64,9 @@ public class Deck : CardBackContainer, IPointerClickHandler {
                 cards.RemoveAt(i);
                 drawnCards.Add(accessed);
             }
-            
-            
+
+            EmptyCheck();
+
             return drawnCards;
 
         }
@@ -74,6 +77,14 @@ public class Deck : CardBackContainer, IPointerClickHandler {
         Debug.Log("Showing deck card display");
         CardController.cardController.cardDisplayCanvas.gameObject.SetActive(true);
         CardController.cardController.cardDisplay.Display(cards, "Deck");
+    }
+
+    private void EmptyCheck() {
+        if(cards.Count == 0) {
+            for (int i = 0; i < transform.childCount; ++i) {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
     }
 
 

@@ -28,6 +28,7 @@ public class Node : Placement {
         c.SetParent(transform, true);
 
         builtTurret = c.GetComponent<Turret>();
+        builtTurret.DrawRange();
 
         return c;
     }
@@ -41,6 +42,7 @@ public class Node : Placement {
 
         builtTurret = null;
     }
+
     public override void ResetColor() {
         rend.material.color = defaultColor;
     }

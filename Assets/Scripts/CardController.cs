@@ -43,6 +43,10 @@ public class CardController : MonoBehaviour
     
     }
 
+    void Update() {
+        resourceText.text = "Resources: " + resources;
+    }
+
 
     public Card GetSelectedCard() {
         if(selectedCard)

@@ -94,8 +94,31 @@ public class Turret : Buildable
         
         transform.Rotate(Vector3.up, rotationSpeed);
         defaultRotation = rotatingPart.rotation; //maybe this
+    }
 
+    public void DrawRange() {
+        int segments = firingAngle*2;
+        
+        Debug.Log(segments);
 
+        LineRenderer lineRend = gameObject.AddComponent<LineRenderer>();
+
+        lineRend.useWorldSpace = false;
+
+        lineRend.startWidth = 1f;
+        lineRend.endWidth = 1f;
+
+        int pointCount = segments + 1;
+        lineRend.positionCount = pointCount;
+
+        Vector3[] points = new Vector3[pointCount];
+
+        for(int i = 0; i < pointCount; ++i) {
+            float rad = -Mathf.Deg2Rad * ((i * firingAngle) / segments);
+            points[i] = new Vector3(Mathf.Cos(rad) * range, 10, Mathf.Sin(rad) * range);
+        }
+
+        lineRend.SetPositions(points);
     }
 
     void Shoot() {

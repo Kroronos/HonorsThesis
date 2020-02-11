@@ -43,10 +43,26 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Rotation"",
-                    ""type"": ""PassThrough"",
+                    ""name"": ""RotationX"",
+                    ""type"": ""Value"",
                     ""id"": ""74d2d6fe-8927-4180-b60f-18d55acd96d8"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RotationY"",
+                    ""type"": ""Value"",
+                    ""id"": ""2a2dfe7c-244f-4c96-9304-2f127f60fbf2"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc84c2a4-839c-452a-80ad-37367d273357"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -169,18 +185,51 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Rotation"",
+                    ""action"": ""RotationX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""3bd32873-8b3d-43e0-8377-cd35039ec7f7"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Rotation"",
+                    ""action"": ""RotationX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b4ceb9a-af5c-4a49-bf2d-b3dac01aba73"",
+                    ""path"": ""<Mouse>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""RotationY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b65b92a9-77ed-4b7c-95d6-09562c799b3b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ffb340f-85eb-4a32-86bc-e9f01de41534"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -222,7 +271,9 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
         m_PlayerInput_Move = m_PlayerInput.FindAction("Move", throwIfNotFound: true);
         m_PlayerInput_Shoot = m_PlayerInput.FindAction("Shoot", throwIfNotFound: true);
         m_PlayerInput_Reload = m_PlayerInput.FindAction("Reload", throwIfNotFound: true);
-        m_PlayerInput_Rotation = m_PlayerInput.FindAction("Rotation", throwIfNotFound: true);
+        m_PlayerInput_RotationX = m_PlayerInput.FindAction("RotationX", throwIfNotFound: true);
+        m_PlayerInput_RotationY = m_PlayerInput.FindAction("RotationY", throwIfNotFound: true);
+        m_PlayerInput_Jump = m_PlayerInput.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -275,7 +326,9 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerInput_Move;
     private readonly InputAction m_PlayerInput_Shoot;
     private readonly InputAction m_PlayerInput_Reload;
-    private readonly InputAction m_PlayerInput_Rotation;
+    private readonly InputAction m_PlayerInput_RotationX;
+    private readonly InputAction m_PlayerInput_RotationY;
+    private readonly InputAction m_PlayerInput_Jump;
     public struct PlayerInputActions
     {
         private @PlayerFPS m_Wrapper;
@@ -283,7 +336,9 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerInput_Move;
         public InputAction @Shoot => m_Wrapper.m_PlayerInput_Shoot;
         public InputAction @Reload => m_Wrapper.m_PlayerInput_Reload;
-        public InputAction @Rotation => m_Wrapper.m_PlayerInput_Rotation;
+        public InputAction @RotationX => m_Wrapper.m_PlayerInput_RotationX;
+        public InputAction @RotationY => m_Wrapper.m_PlayerInput_RotationY;
+        public InputAction @Jump => m_Wrapper.m_PlayerInput_Jump;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,9 +357,15 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
                 @Reload.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnReload;
-                @Rotation.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotation;
-                @Rotation.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotation;
-                @Rotation.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotation;
+                @RotationX.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationX;
+                @RotationX.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationX;
+                @RotationX.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationX;
+                @RotationY.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationY;
+                @RotationY.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationY;
+                @RotationY.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnRotationY;
+                @Jump.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_PlayerInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -318,9 +379,15 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
-                @Rotation.started += instance.OnRotation;
-                @Rotation.performed += instance.OnRotation;
-                @Rotation.canceled += instance.OnRotation;
+                @RotationX.started += instance.OnRotationX;
+                @RotationX.performed += instance.OnRotationX;
+                @RotationX.canceled += instance.OnRotationX;
+                @RotationY.started += instance.OnRotationY;
+                @RotationY.performed += instance.OnRotationY;
+                @RotationY.canceled += instance.OnRotationY;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -348,6 +415,8 @@ public class @PlayerFPS : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
-        void OnRotation(InputAction.CallbackContext context);
+        void OnRotationX(InputAction.CallbackContext context);
+        void OnRotationY(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

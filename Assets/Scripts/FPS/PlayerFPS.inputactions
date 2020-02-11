@@ -30,10 +30,26 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Rotation",
-                    "type": "PassThrough",
+                    "name": "RotationX",
+                    "type": "Value",
                     "id": "74d2d6fe-8927-4180-b60f-18d55acd96d8",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RotationY",
+                    "type": "Value",
+                    "id": "2a2dfe7c-244f-4c96-9304-2f127f60fbf2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "dc84c2a4-839c-452a-80ad-37367d273357",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -156,18 +172,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Rotation",
+                    "action": "RotationX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "3bd32873-8b3d-43e0-8377-cd35039ec7f7",
-                    "path": "<Mouse>/position",
+                    "path": "<Mouse>/delta/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "Rotation",
+                    "action": "RotationX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b4ceb9a-af5c-4a49-bf2d-b3dac01aba73",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "RotationY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b65b92a9-77ed-4b7c-95d6-09562c799b3b",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5ffb340f-85eb-4a32-86bc-e9f01de41534",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

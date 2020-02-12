@@ -8,7 +8,6 @@ using UnityEngine.UI;
 /// TODO:
 ///     - Implement Hold Down to Keep Shooting Bullets
 ///     - Reload Functionality
-///     - Gun Follow Mouse Direction
 ///     - Bullet goes in forward direction barrel + mouse
 ///     - Crosshairs
 ///     - Turning back is weird with camera movement and mouse movement
@@ -25,15 +24,21 @@ public class GunController : MonoBehaviour
     public void InstantiateGun(Transform player, Gun gun)
     {
         reference = gun;
-        instantiatedGun = Instantiate(reference.gunPrefab, player.transform.position + player.transform.forward, reference.gunPrefab.transform.rotation);
+        Vector3 gunPosition = new Vector3(.35f, .4f, 0f);
+        Quaternion rotation = reference.gunPrefab.transform.rotation;
+        rotation = Quaternion.RotateTowards(rotation, Quaternion.Euler(0f, 25f, 0f), 25f);
+        instantiatedGun = Instantiate(reference.gunPrefab, player.transform.position + player.transform.forward + gunPosition, reference.gunPrefab.transform.rotation);
         instantiatedGun.transform.parent = player.transform.GetChild(0).transform; //Need to make a script on Gun to follow player
+
         barrel = instantiatedGun.transform.GetChild(0).transform;
         //Create Reticle Image
         reticle = new GameObject ();
+        reticle.name = "Reticle";
         reticle.transform.parent = transform.GetChild(1);
         Image img = reticle.AddComponent<Image>();
         img.sprite = reference.reticle;
         reticle.transform.localScale /= 10f;
+        reticle.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;  
     }
 
     public void Shoot()
@@ -53,6 +58,5 @@ public class GunController : MonoBehaviour
 
     public void Update()
     {
-        reticle.transform.position = Input.mousePosition;
     }
 }

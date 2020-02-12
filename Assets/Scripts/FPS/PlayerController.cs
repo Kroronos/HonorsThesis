@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
+/// <summary>
+/// 
+/// TODO:
+///     - Crouching
+/// 
+/// </summary>
+
 public class PlayerController : MonoBehaviour
 {
     #region Private Variables
@@ -18,24 +25,29 @@ public class PlayerController : MonoBehaviour
     //Input System
     private PlayerFPS input;
     private Vector2 movementInput, lookRotation;
+    //Gun
+    private GunController gunController;
     #endregion
 
     #region Public Variables
+    public Gun defaultGun;
     #endregion
 
     void Awake()
     {
         input = new PlayerFPS();
         //Register Actions
-        //TODO - Destroy actions
         input.PlayerInput.Shoot.performed += ctx => Shoot();
         input.PlayerInput.Reload.performed += ctx => Reload();
         input.PlayerInput.Jump.performed += ctx => Jump(ctx.ReadValue<float>());
+
+        Cursor.visible = false;
     }
 
     private void Start()
     {
         InitializeVariables ();
+        InitializeGun();
     }
 
     private void InitializeVariables()
@@ -44,6 +56,12 @@ public class PlayerController : MonoBehaviour
         Vector3 currentRotation = transform.localRotation.eulerAngles;
         lookRotation = new Vector2(currentRotation.x, currentRotation.y);
         rb = GetComponent<Rigidbody>();
+        gunController = GetComponent<GunController>();
+    }
+
+    private void InitializeGun ()
+    {
+        gunController.InstantiateGun(transform, defaultGun);
     }
 
     private void OnEnable()
@@ -58,19 +76,18 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         Move();
         rb.AddForce(new Vector3(0f, -9.8f * gravityModifier, 0f));
     }
 
     private void Shoot () 
     {
-        Debug.Log("Shooting");
+        gunController.Shoot();
     }
 
     private void Reload ()
     {
-        Debug.Log("Reloading");
     }
     
     private void Jump (float pressed)

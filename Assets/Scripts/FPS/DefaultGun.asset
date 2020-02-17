@@ -17,5 +17,9 @@ MonoBehaviour:
     type: 3}
   bullet: {fileID: 4590898550007227827, guid: 46887de8630544044bbc1a379d05dd82, type: 3}
   shootRate: 240
-  shootSpeed: 40
+  shootSpeed: 200
   reticle: {fileID: 21300000, guid: e4b5343be60365e42a043ffda4f7eebc, type: 3}
+  totalClipCapacity: 20
+  currentClipCapacity: 20
+  totalAmmoCapacity: 335
+  damageGiven: 20

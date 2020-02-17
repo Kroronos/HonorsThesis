@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         input = new PlayerFPS();
         //Register Actions
-        input.PlayerInput.Shoot.performed += ctx => Shoot();
+        input.PlayerInput.Shoot.performed += ctx => Shoot(ctx.ReadValue<float>());
         input.PlayerInput.Reload.performed += ctx => Reload();
         input.PlayerInput.Jump.performed += ctx => Jump(ctx.ReadValue<float>());
 
@@ -81,13 +81,15 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(new Vector3(0f, -9.8f * gravityModifier, 0f));
     }
 
-    private void Shoot () 
+    private void Shoot (float val) 
     {
-        gunController.Shoot();
+        Debug.Log("Shooting Value: " + val);
+        gunController.Shoot((val == 1) ? true : false);
     }
 
     private void Reload ()
     {
+        gunController.Reload();
     }
     
     private void Jump (float pressed)

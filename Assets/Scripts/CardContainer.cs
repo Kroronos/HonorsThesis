@@ -36,7 +36,7 @@ public class CardFrontContainer: CardContainer {
         Transform c = Instantiate(cardTemplate.transform);
 
         foreach (Transform child in transform) {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
 
         c.SetParent(transform, true);
@@ -48,7 +48,7 @@ public class CardFrontContainer: CardContainer {
         }
 
         foreach (Transform child in transform) {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
 
         Transform c = Instantiate(cardTemplate.transform);

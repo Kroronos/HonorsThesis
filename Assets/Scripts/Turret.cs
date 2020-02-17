@@ -30,8 +30,8 @@ public class Turret : Buildable
         float distanceToValidEnemy = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        Vector3 left = Quaternion.Euler(0, 60, 0) * transform.TransformDirection(Vector3.back) * range; 
-        Vector3 right = Quaternion.Euler(0, -60, 0) * transform.TransformDirection(Vector3.back) * range;
+        Vector3 left = Quaternion.Euler(0, firingAngle, 0) * transform.TransformDirection(Vector3.back) * range; 
+        Vector3 right = Quaternion.Euler(0, -firingAngle, 0) * transform.TransformDirection(Vector3.back) * range;
 
         Vector2 left2d = new Vector2(left.x, left.z);
         Vector2 right2d = new Vector2(right.x, right.z);
@@ -97,28 +97,6 @@ public class Turret : Buildable
     }
 
     public void DrawRange() {
-        int segments = firingAngle*2;
-        
-        Debug.Log(segments);
-
-        LineRenderer lineRend = gameObject.AddComponent<LineRenderer>();
-
-        lineRend.useWorldSpace = false;
-
-        lineRend.startWidth = 1f;
-        lineRend.endWidth = 1f;
-
-        int pointCount = segments + 1;
-        lineRend.positionCount = pointCount;
-
-        Vector3[] points = new Vector3[pointCount];
-
-        for(int i = 0; i < pointCount; ++i) {
-            float rad = -Mathf.Deg2Rad * ((i * firingAngle) / segments);
-            points[i] = new Vector3(Mathf.Cos(rad) * range, 10, Mathf.Sin(rad) * range);
-        }
-
-        lineRend.SetPositions(points);
     }
 
     void Shoot() {

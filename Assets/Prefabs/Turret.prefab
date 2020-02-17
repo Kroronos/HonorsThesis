@@ -400,8 +400,8 @@ MonoBehaviour:
   damage: 1
   enemyTag: Enemy
   rotatingPart: {fileID: 6223487093902261108}
-  firingAngle: 180
-  turnSpeed: 5
+  firingAngle: 160
+  turnSpeed: 0
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6223487093902026586
 GameObject:

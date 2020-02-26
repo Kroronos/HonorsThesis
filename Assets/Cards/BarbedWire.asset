@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da9a0d1b2b2f0334fb2039a4b75e2bfa, type: 3}
-  m_Name: Barbed Wire
+  m_Name: BarbedWire
   m_EditorClassIdentifier: 
   cardName: Barbed Wire
-  description: Creates a permanent obstacle while slows enemies passing through it.
+  description: Creates a permanent obstacle which slows enemies passing through it.
   art: {fileID: 21300000, guid: 7869f0bec2bc50645a42d606643422e6, type: 3}
   cost: 0

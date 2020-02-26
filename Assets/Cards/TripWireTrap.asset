@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da9a0d1b2b2f0334fb2039a4b75e2bfa, type: 3}
-  m_Name: Machine Gun Crew
+  m_Name: TripWireTrap
   m_EditorClassIdentifier: 
-  cardName: Machine Gun Crew
-  description: Places a small machine gun crew in a building which can shoot at enemies
-    in a 120 degree come.
-  art: {fileID: 21300000, guid: c20acfe7fce85f84ca5c39449b80d5d4, type: 3}
-  cost: 2
+  cardName: Trip Wire Trap
+  description: Damages enemies who cross the trap. Once expended five times, the trap
+    cannot be used again until the next round.
+  art: {fileID: 21300000, guid: d0dc012428620984db055bb9e7a6a394, type: 3}
+  cost: 1

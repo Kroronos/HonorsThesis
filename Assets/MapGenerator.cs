@@ -27,8 +27,8 @@ public class MapGenerator : MonoBehaviour {
     GenerationInfo[,] tiles;
     Object[] starts;
     Object[] oneExits;
-    Object[] twoExitsS;
-    Object[] twoExitsC;
+    Object[] twoExitsS; //straight 
+    Object[] twoExitsC; //corner
     Object[] threeExits;
     Object[] fourExits;
 
@@ -112,18 +112,29 @@ public class MapGenerator : MonoBehaviour {
                 break;
         } //end switch
 
-        tiles[x, y].state = GenerationState.GENERATED;
-
-        AdjacentOperations(x, y, tiles, (t, d) => { if (t.state != GenerationState.GENERATED) { t.state = GenerationState.EXPECTED; t.expectedExits.Add(d); } });
-
         //init transform of starting tile
-       Transform gen = Instantiate(tiles[x, y].tile.transform, new Vector3(loc.position.x, 0, loc.position.z),
-           tiles[x, y].tile.transform.rotation);
-       gen.SetParent(transform, false);
+        Transform gen = Instantiate(tiles[x, y].tile.transform, new Vector3(loc.position.x, 0, loc.position.z),
+         tiles[x, y].tile.transform.rotation);
+        gen.SetParent(transform, false);
+
+        if (exitSelected > tiles[x,y].expectedExits.Count) { //rotate to empty
+            //select an adjacent empty direction
+            //add to expected
+            
+        }
+
+
 
         //rotate generation to line up exits
         gen.transform.gameObject.GetComponent<ProceduralTile>().OrientExits(tiles[x, y].expectedExits);
 
+        AdjacentOperations(x, y, tiles, (t, d) => { if (t.state != GenerationState.GENERATED) { t.state = GenerationState.EXPECTED; t.expectedExits.Add(d); } });
+
+        //tiles gen completed here
+        tiles[x, y].state = GenerationState.GENERATED;
+
+
+        //child gen
         ExitDirection[] exitDirs = gen.GetComponent<ProceduralTile>().exitDirs.ToArray();
         Transform[] genPoints = gen.GetComponent<ProceduralTile>().exitPostions.ToArray();
 

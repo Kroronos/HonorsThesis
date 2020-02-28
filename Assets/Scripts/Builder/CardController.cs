@@ -125,7 +125,8 @@ public class CardController : MonoBehaviour
 
         SetSelected(null);
 
-        discard.AddCard(hand.Empty());
+        //TODO COMMENTED FOR TESTING PURPOSES
+        //discard.AddCard(hand.Empty());
 
         foreach (Card card in deck.Draw(4))
             hand.AddCard(card);

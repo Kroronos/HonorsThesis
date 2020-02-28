@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityModifier;
     private bool isGrounded;
     private Rigidbody rb;
+    private float originalY = .24f; //Original Height
     //Input System
     private PlayerFPS input;
     private Vector2 movementInput, lookRotation;
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" && !isGrounded)
+        if (collision.gameObject.tag == "Floor" && !isGrounded && transform.position.y <= originalY) //fix for now
         {
             isGrounded = true;
             Debug.Log(isGrounded);
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" && isGrounded)
+        if (collision.gameObject.tag == "Floor" && isGrounded && transform.position.y >= originalY)
         {
             isGrounded = false;
             Debug.Log(isGrounded);

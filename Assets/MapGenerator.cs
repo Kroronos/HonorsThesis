@@ -146,6 +146,7 @@ public class MapGenerator : MonoBehaviour {
         AdjacentOperations(x, y, tiles, (t, d) => { if (t.state != GenerationState.GENERATED) { t.state = GenerationState.EXPECTED; t.expectedExits.Add(d); } });
 
         //tiles gen completed here
+        tiles[x, y].tile = gen.transform.gameObject.GetComponent<ProceduralTile>();
         tiles[x, y].state = GenerationState.GENERATED;
 
 
@@ -166,16 +167,55 @@ public class MapGenerator : MonoBehaviour {
     }
 
     void RefineMap() { //fill and beautify map
+        GameObject spawn = (GameObject) Resources.Load(proceduralPath + "/Spawn");
+
         for(int x = 0; x < mapDimensions; ++x ) {
             for(int y = 0; y < mapDimensions; ++y ) {
 
                 //choose spawn points 
-                if(x+1 == mapDimensions || x == 0 || y+1 == mapDimensions || y == 0) {
-                    if(tiles[x,y].state == GenerationState.GENERATED) {
+                if (tiles[x, y].state == GenerationState.GENERATED) {
+                    if (x + 1 == mapDimensions) { // right
+
+                       if(tiles[x,y].tile.exitDirs.Contains(ExitDirection.RIGHT)) {
+                            Vector3 point = tiles[x, y].tile.getPositionOfExit(ExitDirection.RIGHT);
+                            Transform enemySpawn = Instantiate(spawn.transform,
+                                new Vector3(point.x, 0, point.z),
+                                spawn.transform.rotation);
+                            enemySpawn.SetParent(transform, false);
+                        }
+                    }
+
+                    if (x == 0) { // left
+                        if (tiles[x, y].tile.exitDirs.Contains(ExitDirection.LEFT)) {
+                            Vector3 point = tiles[x, y].tile.getPositionOfExit(ExitDirection.LEFT);
+                            Transform enemySpawn = Instantiate(spawn.transform,
+                                new Vector3(point.x, 0, point.z),
+                                spawn.transform.rotation);
+                            enemySpawn.SetParent(transform, false);
+                        }
+                    }
+                    
+                    if(y + 1 == mapDimensions) { // top
+                        if (tiles[x, y].tile.exitDirs.Contains(ExitDirection.UP)) {
+                            Vector3 point = tiles[x, y].tile.getPositionOfExit(ExitDirection.UP);
+                            Transform enemySpawn = Instantiate(spawn.transform,
+                                new Vector3(point.x, 0, point.z),
+                                spawn.transform.rotation);
+                            enemySpawn.SetParent(transform, false);
+                        }
+                    }
                         
+                    if(y == 0) { //bottom
+                        if (tiles[x, y].tile.exitDirs.Contains(ExitDirection.DOWN)) {
+                            Vector3 point = tiles[x, y].tile.getPositionOfExit(ExitDirection.DOWN);
+                            Transform enemySpawn = Instantiate(spawn.transform,
+                                new Vector3(point.x, 0, point.z),
+                                spawn.transform.rotation);
+                            enemySpawn.SetParent(transform, false);
+                        }
                     }
                 }
-
+                
 
                 if(tiles[x , y].state == GenerationState.EMPTY) { // no empty tiles allowed
                     fill = Resources.LoadAll(proceduralPath + "/Fill");

@@ -31,11 +31,13 @@ public class MapGenerator : MonoBehaviour {
     Object[] twoExitsC; //corner
     Object[] threeExits;
     Object[] fourExits;
+    Object[] fill; //fill
 
     public void Awake() {
         tiles = new GenerationInfo[mapDimensions, mapDimensions];
 
         GenerateMap(mapDimensions/2 + 1, mapDimensions/2 + 1);
+
     }
 
     public void GenerateMap(int startX, int startY) {
@@ -71,6 +73,8 @@ public class MapGenerator : MonoBehaviour {
                 GenerateTile(GetNewX(startX, startY, exitDirs[i]), GetNewY(startX, startY, exitDirs[i]), genPoints[i]);
             }
         }
+
+        RefineMap();
     }
 
     void GenerateTile(int x, int y, Transform loc) {
@@ -117,10 +121,21 @@ public class MapGenerator : MonoBehaviour {
          tiles[x, y].tile.transform.rotation);
         gen.SetParent(transform, false);
 
-        if (exitSelected > tiles[x,y].expectedExits.Count) { //rotate to empty
-            //select an adjacent empty direction
+        if (exitSelected > tiles[x,y].expectedExits.Count) { // populate expected exits with empty tiles 
+            //get adjacent empty direction to expected
+            List<ExitDirection> empties = GetEmptyTileDirections(x, y, exitSelected);
+
             //add to expected
-            
+            if(empties.Count + tiles[x,y].expectedExits.Count <= exitSelected) {
+                tiles[x, y].expectedExits.UnionWith(empties);
+            }
+            else {
+                int offset = exitSelected - tiles[x, y].expectedExits.Count;
+                int startingPos = Random.Range(0, empties.Count-offset);
+
+                tiles[x, y].expectedExits.UnionWith(empties.GetRange(startingPos, offset));
+            }
+
         }
 
 
@@ -145,6 +160,28 @@ public class MapGenerator : MonoBehaviour {
 
                 if (tiles[newX, newY].state != GenerationState.GENERATED) {
                     GenerateTile(newX, newY, genPoints[i]);
+                }
+            }
+        }
+    }
+
+    void RefineMap() { //fill and beautify map
+        for(int x = 0; x < mapDimensions; ++x ) {
+            for(int y = 0; y < mapDimensions; ++y ) {
+
+                //choose spawn points 
+                if(x+1 == mapDimensions || x == 0 || y+1 == mapDimensions || y == 0) {
+                    if(tiles[x,y].state == GenerationState.GENERATED) {
+                        
+                    }
+                }
+
+
+                if(tiles[x , y].state == GenerationState.EMPTY) { // no empty tiles allowed
+                    fill = Resources.LoadAll(proceduralPath + "/Fill");
+
+                    tiles[x, y].tile =
+                        ((GameObject)oneExits[Random.Range(0, fill.Length)]).GetComponent<ProceduralTile>();
                 }
             }
         }
@@ -196,6 +233,32 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    public List<ExitDirection> GetEmptyTileDirections(int x, int y, int exitCount) {
+        List<ExitDirection> emptyDirections = new List<ExitDirection>();
+        
+        if(exitCount > 2) {  //@TODO hacky
+
+            if (x + 1 < mapDimensions) { //go right
+                if (tiles[x + 1, y].state.Equals(GenerationState.EMPTY)) emptyDirections.Add(ExitDirection.RIGHT);
+            }
+
+            if (x - 1 >= 0) { //go left
+                if (tiles[x - 1, y].state.Equals(GenerationState.EMPTY)) emptyDirections.Add(ExitDirection.LEFT);
+            }
+
+
+            if (y + 1 < mapDimensions) { //go up
+                if (tiles[x, y + 1].state.Equals(GenerationState.EMPTY)) emptyDirections.Add(ExitDirection.UP);
+            }
+
+            if (y - 1 >= 0) { //go down
+                if (tiles[x, y - 1].state.Equals(GenerationState.EMPTY)) emptyDirections.Add(ExitDirection.DOWN);
+            }
+        }
+
+        return emptyDirections;
+    }
+
     public int CountAdjEmpty(int x, int y) {
         int empty  = 0;
 
@@ -207,9 +270,8 @@ public class MapGenerator : MonoBehaviour {
             if (tiles[x-1, y].state.Equals(GenerationState.EMPTY)) ++empty;
         }
 
-
         if (y + 1 < mapDimensions) { //go up
-            if (tiles[x, y+1].state.Equals(GenerationState.EMPTY)) ++empty;
+            if (tiles[x, y + 1].state.Equals(GenerationState.EMPTY)) ++empty;
         }
 
         if (y - 1 >= 0) { //go down
@@ -218,6 +280,7 @@ public class MapGenerator : MonoBehaviour {
 
         return empty;
     }
+
 
     public void AdjacentOperations<T>(int x, int y, T[,] arr, System.Action<T, ExitDirection> f) {
         if (x + 1 < mapDimensions) { //go right

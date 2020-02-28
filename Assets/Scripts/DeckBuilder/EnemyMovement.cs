@@ -5,9 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour {
 
+    private Transform[] path;
     private Transform target;
-    private int pathIndex;
-    private int waypointIndex = 0;
+
+    private int pathIndex = 0;
 
     private Enemy enemy;
 
@@ -15,16 +16,16 @@ public class EnemyMovement : MonoBehaviour {
 
         enemy = GetComponent<Enemy>();
 
-        System.Random r = new System.Random();
-        pathIndex = r.Next(0, Waypoints.paths.Count);
-        target = Waypoints.paths[pathIndex][waypointIndex];
+        path = Waypoints.waypoints.GetPathFromSource(enemy.source);
+
+        target = path[pathIndex];
     }
 
     void LateUpdate() {
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
 
-        if(Vector3.Distance(transform.position, target.position) <= 0.2f) {
+        if(Vector3.Distance(transform.position, target.position) <= 0.1f) {
             GetNextWaypoint();
         }
 
@@ -33,13 +34,13 @@ public class EnemyMovement : MonoBehaviour {
     }
 
     void GetNextWaypoint() {
-
-        if(waypointIndex >=  Waypoints.paths[pathIndex].Length-1) {
-            Destroy(gameObject);
-            return;
+        if (++pathIndex >= path.Length) {
+            Destroy(enemy.gameObject);
         }
 
-        target = Waypoints.paths[pathIndex][++waypointIndex];
+        else {
+            target = path[pathIndex];
+        }
     }
 
 }

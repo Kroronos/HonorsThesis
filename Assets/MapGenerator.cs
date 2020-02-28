@@ -8,13 +8,13 @@ public class MapGenerator : MonoBehaviour {
     private string proceduralPath = "Procedural";
 
 
-    enum GenerationState {
+    public enum GenerationState {
         EMPTY, //no neighboring exit
         EXPECTED, //neighboring exit
         GENERATED //tile already generated
     }
 
-    class GenerationInfo {
+    public class GenerationInfo {
         public ProceduralTile tile;
         public GenerationState state;
         public HashSet<ExitDirection> expectedExits;
@@ -24,7 +24,11 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    GenerationInfo[,] tiles;
+    public GenerationInfo[,] tiles;
+    public List<System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>> spawnCoords
+        = new List<System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>>();
+    public System.Tuple<int, int> startCoord;
+
     Object[] starts;
     Object[] oneExits;
     Object[] twoExitsS; //straight 
@@ -38,6 +42,11 @@ public class MapGenerator : MonoBehaviour {
 
         GenerateMap(mapDimensions/2 + 1, mapDimensions/2 + 1);
 
+    }
+
+    public void Start() {
+        Waypoints.waypoints.GeneratePaths(this);
+        Debug.Log("Waypoints linked to map");
     }
 
     public void GenerateMap(int startX, int startY) {
@@ -63,6 +72,10 @@ public class MapGenerator : MonoBehaviour {
         //init transform of starting tile
         Transform start = Instantiate(tiles[startX, startY].tile.transform);
         start.SetParent(transform, false);
+        tiles[startX, startY].tile = start.GetComponent<ProceduralTile>();
+
+        startCoord = new System.Tuple<int, int>(startX, startY);
+
 
         Transform[] genPoints = tiles[startX,startY].tile.exitPostions.ToArray();
         ExitDirection[] exitDirs = tiles[startX, startY].tile.exitDirs.ToArray();
@@ -75,6 +88,7 @@ public class MapGenerator : MonoBehaviour {
         }
 
         RefineMap();
+        Debug.Log("Generation finished");
     }
 
     void GenerateTile(int x, int y, Transform loc) {
@@ -181,6 +195,9 @@ public class MapGenerator : MonoBehaviour {
                             Transform enemySpawn = Instantiate(spawn.transform,
                                 new Vector3(point.x, 0, point.z),
                                 spawn.transform.rotation);
+                            spawnCoords.Add(new System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>
+                                                          (new System.Tuple<Transform, ExitDirection>(enemySpawn, ExitDirection.RIGHT),
+                                                          new System.Tuple<int, int>(x, y)));
                             enemySpawn.SetParent(transform, false);
                         }
                     }
@@ -191,6 +208,9 @@ public class MapGenerator : MonoBehaviour {
                             Transform enemySpawn = Instantiate(spawn.transform,
                                 new Vector3(point.x, 0, point.z),
                                 spawn.transform.rotation);
+                            spawnCoords.Add(new System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>
+                                (new System.Tuple<Transform, ExitDirection>(enemySpawn, ExitDirection.LEFT),
+                                new System.Tuple<int, int>(x, y)));
                             enemySpawn.SetParent(transform, false);
                         }
                     }
@@ -201,6 +221,9 @@ public class MapGenerator : MonoBehaviour {
                             Transform enemySpawn = Instantiate(spawn.transform,
                                 new Vector3(point.x, 0, point.z),
                                 spawn.transform.rotation);
+                            spawnCoords.Add(new System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>
+                                                          (new System.Tuple<Transform, ExitDirection>(enemySpawn, ExitDirection.UP),
+                                                          new System.Tuple<int, int>(x, y)));
                             enemySpawn.SetParent(transform, false);
                         }
                     }
@@ -211,7 +234,9 @@ public class MapGenerator : MonoBehaviour {
                             Transform enemySpawn = Instantiate(spawn.transform,
                                 new Vector3(point.x, 0, point.z),
                                 spawn.transform.rotation);
-                            enemySpawn.SetParent(transform, false);
+                            spawnCoords.Add(new System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>
+                                                          (new System.Tuple<Transform, ExitDirection>(enemySpawn, ExitDirection.DOWN),
+                                                          new System.Tuple<int, int>(x, y)));
                         }
                     }
                 }
@@ -338,6 +363,59 @@ public class MapGenerator : MonoBehaviour {
 
         if (y - 1 >= 0) { //go down
             f(arr[x, y - 1], ExitDirection.UP);
+        }
+    }
+
+    public List<System.Tuple<int, int>> GetAdjacent(System.Tuple<int, int> xyCoord) {
+        List<System.Tuple<int, int>> adj = new List<System.Tuple<int, int>>();
+
+        GenerationInfo generationInfo = tiles[xyCoord.Item1, xyCoord.Item2];
+
+        foreach(ExitDirection exit in generationInfo.tile.exitDirs) {
+            if(IsValidPosition(xyCoord.Item1, xyCoord.Item2, exit)) {
+                int newX = GetNewX(xyCoord.Item1, xyCoord.Item2, exit);
+                int newY = GetNewY(xyCoord.Item1, xyCoord.Item2, exit);
+
+
+                if (tiles[newX, newY].state == GenerationState.GENERATED &&
+                    tiles[newX, newY].tile.exitDirs.Contains(ProceduralTile.GetOppositeDirection(exit))) {
+
+                    adj.Add(new System.Tuple<int, int>(newX, newY));
+
+                } 
+            }
+        }
+
+        return adj;
+    }
+
+    public ExitDirection GetSourceDirection(int oldX, int oldY, int newX, int newY) {
+        if(newX > oldX) {
+            return ExitDirection.LEFT;
+        }
+        else if (newX < oldX) {
+            return ExitDirection.RIGHT;
+        }
+        else if(newY > oldY) {
+            return ExitDirection.DOWN;
+        }
+        else {
+            return ExitDirection.UP;
+        }
+    }
+
+    public ExitDirection GetExitDirection(int oldX, int oldY, int newX, int newY) {
+        if (newX > oldX) {
+            return ExitDirection.RIGHT;
+        }
+        else if (newX < oldX) {
+            return ExitDirection.LEFT;
+        }
+        else if (newY > oldY) {
+            return ExitDirection.UP;
+        }
+        else {
+            return ExitDirection.DOWN;
         }
     }
 }

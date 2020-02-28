@@ -94,6 +94,7 @@ MonoBehaviour:
   exitDirs: 03000000
   exitPostions:
   - {fileID: 6513479434409958969}
+  paths: []
 --- !u!1 &3891379858690182341
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7824752599262123924}
+  - component: {fileID: 8738662455927965232}
   m_Layer: 0
   m_Name: PathA
   m_TagString: Untagged
@@ -178,6 +180,21 @@ Transform:
   m_Father: {fileID: 6896910965058612495}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8738662455927965232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4721873292355262584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bc6add65467124e94bcab0cc7892af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paths: []
+  enter: 3
+  exit: 3
 --- !u!1 &5656993219669254446
 GameObject:
   m_ObjectHideFlags: 0

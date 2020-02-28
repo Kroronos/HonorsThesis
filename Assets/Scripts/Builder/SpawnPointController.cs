@@ -6,22 +6,31 @@ public class SpawnPointController : MonoBehaviour {
     public static WaveSpawner[] spawnPoints;
     public static SpawnPointController spawnPointController;
 
+    private bool test = true;
 
-    void Awake() {
+    void Start() {
         
         if (spawnPointController == null) {
             spawnPointController = this;
         }
         else {
-            Debug.LogError("More than one card controller in application.");
+            Debug.LogError("More than one spawn controller in application.");
         }
 
         spawnPoints = GetComponentsInChildren<WaveSpawner>();
     }
 
+    public void Update() {
+        if(test) {
+            NextWave();
+        }
+        test = false;
+    }
+
     public void NextWave() {
+        Debug.Log("Spawning waves");
        foreach (WaveSpawner spawner in spawnPoints) {
-            StartCoroutine(spawner.SpawnWave());
+            StartCoroutine(spawner.SpawnWave(2));
         }
     }
 }

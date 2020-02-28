@@ -35,6 +35,7 @@ public class ProceduralTile : MonoBehaviour {
 
     public List<ExitDirection> exitDirs;
     public List<Transform> exitPostions;
+    private Path[] paths; 
 
     void Awake() {
         if(exitDirs.Count != exitPostions.Count) {
@@ -46,6 +47,8 @@ public class ProceduralTile : MonoBehaviour {
         for(int i = 0; i < exitDirs.Count || i < exitPostions.Count; ++i) {
             exits.Add(exitDirs[i], exitPostions[i]);
         }
+
+        paths = GetComponentsInChildren<Path>();
     }
 
     public void OrientExits(HashSet<ExitDirection> desiredExits) { 
@@ -58,7 +61,15 @@ public class ProceduralTile : MonoBehaviour {
             }
 
             transform.Rotate(transform.up, 90);
+
+            for (int i = 0; i < paths.Length; ++i) {
+                paths[i].enter = ExitDirectionOperations.GetNext(paths[i].enter);
+                paths[i].exit = ExitDirectionOperations.GetNext(paths[i].exit);
+
+            }
+
         }
+
 
         exits.Clear();
 
@@ -75,6 +86,42 @@ public class ProceduralTile : MonoBehaviour {
             return true;
         }
         return false; 
+    }
+
+    public static ExitDirection GetOppositeDirection(ExitDirection exit) {
+        if(exit == ExitDirection.DOWN) {
+            return ExitDirection.UP;
+        }
+        else if (exit == ExitDirection.LEFT) {
+            return ExitDirection.RIGHT;
+        }
+        else if (exit == ExitDirection.RIGHT) {
+            return ExitDirection.LEFT;
+        }
+        else {
+            return ExitDirection.DOWN;
+        }
+    }
+
+    public List<List<Transform>> GetPaths(ExitDirection enter, ExitDirection exit) {
+        List<List<Transform>> listOfPaths = new List<List<Transform>>();
+        foreach(Path p in paths) {
+            if(p.enter == enter && p.exit == exit)
+                listOfPaths.Add(p.GetPathWaypoints());
+        }
+
+        return listOfPaths;
+    }
+
+    public List<List<Transform>> GetPaths(ExitDirection enter) {
+        List<List<Transform>> listOfPaths = new List<List<Transform>>();
+
+        foreach (Path p in paths) {
+            if(p.enter == enter)
+                listOfPaths.Add(p.GetPathWaypoints());
+        }
+
+        return listOfPaths;
     }
 
     public int GetExitNumber() {

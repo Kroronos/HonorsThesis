@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6896910965058612495}
-  - component: {fileID: 3694211902411418698}
   m_Layer: 0
   m_Name: Waypoints
   m_TagString: Untagged
@@ -33,18 +32,6 @@ Transform:
   m_Father: {fileID: 3947287342714569703}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3694211902411418698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318491169266663171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669b8c104cdd8684c906692aaa8e8983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2248928187945962796
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +83,7 @@ MonoBehaviour:
   exitPostions:
   - {fileID: 6513479434409958969}
   - {fileID: 163930627627754663}
+  paths: []
 --- !u!1 &3891379858690182341
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3957329056376386137}
+  - component: {fileID: 4073953051770846382}
   m_Layer: 0
   m_Name: PathB
   m_TagString: Untagged
@@ -273,6 +262,21 @@ Transform:
   m_Father: {fileID: 6896910965058612495}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4073953051770846382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668391926195703696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bc6add65467124e94bcab0cc7892af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paths: []
+  enter: 3
+  exit: 2
 --- !u!1 &5656993219669254446
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8917212821709941760}
+  - component: {fileID: 7668413224385563616}
   m_Layer: 0
   m_Name: PathA
   m_TagString: Untagged
@@ -338,6 +343,21 @@ Transform:
   m_Father: {fileID: 6896910965058612495}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7668413224385563616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095756794898661536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bc6add65467124e94bcab0cc7892af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paths: []
+  enter: 3
+  exit: 2
 --- !u!1 &9169008527999447047
 GameObject:
   m_ObjectHideFlags: 0

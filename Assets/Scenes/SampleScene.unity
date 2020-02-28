@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1171,9 +1171,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1844803981}
   - component: {fileID: 1844803982}
-  - component: {fileID: 1844803983}
+  - component: {fileID: 1844803986}
   - component: {fileID: 1844803984}
   - component: {fileID: 1844803985}
+  - component: {fileID: 1844803983}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1218,15 +1219,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844803980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc6e4fecd3d77c4bbe9d9e1d107f4f1, type: 3}
+  m_Script: {fileID: 11500000, guid: a230285345d5fda4bb776603d38ad4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 0}
-  display: {fileID: 0}
-  target: {fileID: 0}
-  rotationSpeed: 10
-  leftRotationHotkey: 113
-  rightRotationHotkey: 101
 --- !u!114 &1844803984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,7 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb05ca9bfa342d4ea70d6b6e28a770f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapDimensions: 15
+  mapDimensions: 5
 --- !u!114 &1844803985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,6 +1249,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2108381725}
   playmat: {fileID: 235827376}
+--- !u!114 &1844803986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844803980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669b8c104cdd8684c906692aaa8e8983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1909717417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3370475912277214008, guid: c67dc24968c8fcc4c900cd3cea249aef,

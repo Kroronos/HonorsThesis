@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] //on spawn speed is set
     public float speed;
 
+    public Transform source; 
+
     void Start() {
         speed = baseSpeed;
     }

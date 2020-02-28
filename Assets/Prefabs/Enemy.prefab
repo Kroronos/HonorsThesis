@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
-  baseSpeed: 10
+  baseSpeed: 5
   speed: 0
 --- !u!114 &2757528631256719024
 MonoBehaviour:

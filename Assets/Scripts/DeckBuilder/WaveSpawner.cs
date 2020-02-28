@@ -6,10 +6,9 @@ public class WaveSpawner : MonoBehaviour {
 
     public Enemy enemeyPrefab;
 
-    private int waveNumber = 1;
     private float waveInterval = 0.5f;
 
-    public IEnumerator SpawnWave() {
+    public IEnumerator SpawnWave(int waveNumber) {
         Debug.Log("Next Wave Started!");
 
         for(int i = 0; i < waveNumber; ++i) { //loop controls number of spanwed enemies
@@ -20,6 +19,7 @@ public class WaveSpawner : MonoBehaviour {
         ++waveNumber;
     }
     void SpawnEnemy() {
-        Instantiate(enemeyPrefab, transform.position, transform.rotation);
+        enemeyPrefab.source = transform;
+        Instantiate(enemeyPrefab, new Vector3(transform.position.x, 0, transform.position.z), transform.rotation);
     }
 }

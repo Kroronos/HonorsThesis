@@ -41,6 +41,6 @@ public class Switch : MonoBehaviour
     /// </summary>
     private void ChangeActive (GameObject obj)
     {
-        obj.SetActive((topCamera.activeSelf == true) ? false : true);
+        obj.SetActive((obj.activeSelf == true) ? false : true);
     }
 }

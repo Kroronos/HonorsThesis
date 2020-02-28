@@ -38,12 +38,13 @@ public class GunController : MonoBehaviour
         reference.currentClipCapacity = reference.totalClipCapacity;
 
         ammoText.text = reference.currentClipCapacity.ToString() + "/" + reference.totalAmmoCapacity.ToString();
-        Vector3 gunPosition = new Vector3(.25f, -.03f, 0f);
+        Vector3 gunPosition = new Vector3(.25f, -.03f, -.3f);
         Quaternion rotation = reference.gunPrefab.transform.rotation;
         rotation = Quaternion.RotateTowards(rotation, Quaternion.Euler(0f, 25f, 0f), 25f);
         instantiatedGun = Instantiate(reference.gunPrefab, player.transform.position + player.transform.forward + gunPosition, reference.gunPrefab.transform.rotation);
         instantiatedGun.transform.parent = player.transform.GetChild(0).transform; //Need to make a script on Gun to follow player
         gunRot = instantiatedGun.transform.rotation;
+        instantiatedGun.layer = 8;
 
         barrel = instantiatedGun.transform.GetChild(0).transform;
         //Create Reticle Image

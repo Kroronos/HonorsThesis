@@ -38,7 +38,7 @@ public class GunController : MonoBehaviour
         reference.currentClipCapacity = reference.totalClipCapacity;
 
         ammoText.text = reference.currentClipCapacity.ToString() + "/" + reference.totalAmmoCapacity.ToString();
-        Vector3 gunPosition = new Vector3(.25f, .2f, 0f);
+        Vector3 gunPosition = new Vector3(.25f, -.03f, 0f);
         Quaternion rotation = reference.gunPrefab.transform.rotation;
         rotation = Quaternion.RotateTowards(rotation, Quaternion.Euler(0f, 25f, 0f), 25f);
         instantiatedGun = Instantiate(reference.gunPrefab, player.transform.position + player.transform.forward + gunPosition, reference.gunPrefab.transform.rotation);

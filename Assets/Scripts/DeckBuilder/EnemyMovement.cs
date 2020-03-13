@@ -22,12 +22,18 @@ public class EnemyMovement : MonoBehaviour {
     }
 
     void LateUpdate() {
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
+        if(target != null) {
+            Vector3 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
 
-        if(Vector3.Distance(transform.position, target.position) <= 0.1f) {
-            GetNextWaypoint();
+            if (Vector3.Distance(transform.position, target.position) <= 0.1f) {
+                GetNextWaypoint();
+            }
         }
+        else {
+            Debug.Log("Enemy spawned without target, this is a pathfinding issue.");
+        }
+
 
         //resets speed so if a slow applied on update [For this to work properly needs to be late update or delayed script execution]
         enemy.speed = enemy.baseSpeed;

@@ -19,8 +19,11 @@ public class Waypoints : MonoBehaviour
 
     public void GeneratePaths(MapGenerator map) {
         System.Tuple<int, int> start = map.startCoord;
-        foreach(System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>> dest in map.spawnCoords) {
-            GeneratePaths(dest, start, map);
+        
+        Debug.Log("Destinations in map count: " + map.spawnCoords.Count);
+
+        foreach(System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>> spawn in map.spawnCoords) {
+            GeneratePaths(spawn, start, map);
         }
     }
 
@@ -38,7 +41,9 @@ public class Waypoints : MonoBehaviour
                 //get path of transforms 
 
                 List<List<List<Transform>>> paths = new List<List<List<Transform>>>();
-                for(int i = 0; i < currPath.Count; ++i) {
+
+                for(int i = 0; i < currPath.Count; ++i) { //for each node in currPath
+                
                     if(i == 0) { //need to get path from spawn to exit
                         paths.Add(map.tiles[dest.Item2.Item1, dest.Item2.Item2].tile.GetPaths(dest.Item1.Item2));
                     }
@@ -60,7 +65,8 @@ public class Waypoints : MonoBehaviour
                 UnpackPaths(dest.Item1.Item1, new List<Transform>(), paths);
                 
             }
-            else {
+            else { //path does not end at source
+
                 foreach (System.Tuple<int, int> adj in map.GetAdjacent(currPath[currPath.Count - 1])) {
                     if (!currPath.Contains(adj)) {
                         List<System.Tuple<int, int>> temp = new List<System.Tuple<int, int>>();
@@ -112,8 +118,11 @@ public class Waypoints : MonoBehaviour
         bool hasValue = paths.TryGetValue(source, out path);
         if (hasValue)
             return path[Random.Range(0, path.Count)];
-        else
+        else {
+            Debug.LogError("No paths found, paths has " + paths.Keys.Count + " sources.");
             throw new System.Exception("No paths found from source provided to GetPathFromSource");
+
+        }
     }
 
 }

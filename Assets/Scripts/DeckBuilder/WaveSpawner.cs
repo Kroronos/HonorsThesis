@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour {
 
-    public Enemy enemeyPrefab;
+    public Enemy enemyPrefab;
 
     private float waveInterval = 0.5f;
 
@@ -19,7 +19,7 @@ public class WaveSpawner : MonoBehaviour {
         ++waveNumber;
     }
     void SpawnEnemy() {
-        enemeyPrefab.source = transform;
-        Instantiate(enemeyPrefab, new Vector3(transform.position.x, 0, transform.position.z), transform.rotation);
+        enemyPrefab.source = transform;
+        Instantiate(enemyPrefab, new Vector3(transform.position.x, 0, transform.position.z), transform.rotation);
     }
 }

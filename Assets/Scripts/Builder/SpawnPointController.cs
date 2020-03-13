@@ -18,6 +18,7 @@ public class SpawnPointController : MonoBehaviour {
         }
 
         spawnPoints = GetComponentsInChildren<WaveSpawner>();
+        Debug.Log("Size of spawn points is " + spawnPoints.Length); 
     }
 
     public void Update() {

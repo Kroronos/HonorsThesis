@@ -237,6 +237,7 @@ public class MapGenerator : MonoBehaviour {
                             spawnCoords.Add(new System.Tuple<System.Tuple<Transform, ExitDirection>, System.Tuple<int, int>>
                                                           (new System.Tuple<Transform, ExitDirection>(enemySpawn, ExitDirection.DOWN),
                                                           new System.Tuple<int, int>(x, y)));
+                            enemySpawn.SetParent(transform, false);
                         }
                     }
                 }
@@ -367,6 +368,7 @@ public class MapGenerator : MonoBehaviour {
     }
 
     public List<System.Tuple<int, int>> GetAdjacent(System.Tuple<int, int> xyCoord) {
+
         List<System.Tuple<int, int>> adj = new List<System.Tuple<int, int>>();
 
         GenerationInfo generationInfo = tiles[xyCoord.Item1, xyCoord.Item2];

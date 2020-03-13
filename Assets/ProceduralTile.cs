@@ -49,6 +49,8 @@ public class ProceduralTile : MonoBehaviour {
         }
 
         paths = GetComponentsInChildren<Path>();
+
+        if(paths.Length == 0) { Debug.Log("Tile does not have valid paths."); };
     }
 
     public void OrientExits(HashSet<ExitDirection> desiredExits) { 
@@ -108,6 +110,15 @@ public class ProceduralTile : MonoBehaviour {
         foreach(Path p in paths) {
             if(p.enter == enter && p.exit == exit)
                 listOfPaths.Add(p.GetPathWaypoints());
+            else if(p.enter == exit && p.exit == enter) {
+                List<Transform> reversedPath = p.GetPathWaypoints();
+                reversedPath.Reverse();
+                listOfPaths.Add(reversedPath);
+            }
+        }
+
+        if (listOfPaths.Count == 0) {
+            Debug.Log("Retrieved path with given enterance and exit is empty.");
         }
 
         return listOfPaths;
@@ -119,6 +130,15 @@ public class ProceduralTile : MonoBehaviour {
         foreach (Path p in paths) {
             if(p.enter == enter)
                 listOfPaths.Add(p.GetPathWaypoints());
+            else if(p.exit == enter) {
+                List<Transform> reversedPath = p.GetPathWaypoints();
+                reversedPath.Reverse();
+                listOfPaths.Add(reversedPath);
+            }
+        }
+
+        if(listOfPaths.Count == 0) {
+            Debug.Log("Retrieved path with given enterance is empty.");
         }
 
         return listOfPaths;
